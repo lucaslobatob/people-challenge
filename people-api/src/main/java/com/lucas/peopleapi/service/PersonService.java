@@ -1,7 +1,12 @@
 package com.lucas.peopleapi.service;
 
+import com.lucas.peopleapi.exception.DuplicateResourceException;
 import com.lucas.peopleapi.model.Person;
 import com.lucas.peopleapi.repository.PersonRepository;
+import com.lucas.peopleapi.specification.PersonSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,8 +22,10 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public List<Person> findAll() {
-        return personRepository.findAll();
+    public Page<Person> findAll(String name, String document, Pageable pageable) {
+        Specification<Person> specification = PersonSpecification.filter(name, document);
+
+        return personRepository.findAll(specification, pageable);
     }
 
     public Person findById(Long id) {
@@ -27,11 +34,13 @@ public class PersonService {
     }
 
     public Person createPerson(Person person) {
+        validateDuplicate(person);
         return personRepository.save(person);
     }
 
     public Person updatePerson(Long id, Person person) {
         Person existingPerson = findById(id);
+        validateDuplicateOnUpdate(id, person);
 
         if (person.getFullName() != null) {
         existingPerson.setFullName(person.getFullName());
@@ -55,5 +64,44 @@ public class PersonService {
     public void deletePerson(Long id) {
         Person person = findById(id);
         personRepository.delete(person);
+    }
+
+    private void validateDuplicate(Person person) {
+        if (personRepository.existsByDocument(person.getDocument())) {
+            throw new DuplicateResourceException(
+                    "CPF/CNPJ already registered."
+            );
+        }
+
+        if (personRepository.existsByEmail(person.getEmail())) {
+            throw new DuplicateResourceException(
+                    "E-mail already registered."
+            );
+        }
+    }
+    private void validateDuplicateOnUpdate(Long id, Person person) {
+
+        if (person.getDocument() != null &&
+                personRepository.existsByDocumentAndIdNot(
+                        person.getDocument(),
+                        id
+                )) {
+
+            throw new DuplicateResourceException(
+                    "CPF/CNPJ already registered."
+            );
+        }
+
+
+        if (person.getEmail() != null &&
+                personRepository.existsByEmailAndIdNot(
+                        person.getEmail(),
+                        id
+                )) {
+
+            throw new DuplicateResourceException(
+                    "E-mail already registered."
+            );
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.lucas.peopleapi.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "people")
@@ -13,6 +14,10 @@ public class Person {
 
     @Column(nullable = false)
     @NotBlank
+    @Pattern(
+            regexp="^[A-Za-zÀ-ÿ\s]+$",
+            message = "O nome deve conter apenas letras."
+    )
     private String fullName;
 
     @Column(nullable = false, unique = true)

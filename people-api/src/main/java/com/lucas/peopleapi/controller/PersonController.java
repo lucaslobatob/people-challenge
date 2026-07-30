@@ -3,6 +3,8 @@ package com.lucas.peopleapi.controller;
 import com.lucas.peopleapi.model.Person;
 import com.lucas.peopleapi.service.PersonService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,12 @@ public class PersonController {
     }
 
     @GetMapping
-    public List<Person> getAllPeople() {
-        return personService.findAll();
+    public Page<Person> getAllPeople(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String document,
+            Pageable pageable
+    ) {
+        return personService.findAll(name, document, pageable);
     }
 
     @GetMapping("/{id}")
