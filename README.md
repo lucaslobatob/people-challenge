@@ -8,6 +8,8 @@ Aplicação Full Stack desenvolvida como desafio técnico para cadastro de pesso
 
 O sistema permite realizar as operações de CRUD (Create, Read, Update e Delete) de pessoas, permitindo listar, cadastrar, editar e excluir registros por meio de uma interface responsiva desenvolvida em Vue 3, consumindo uma API REST construída com Spring Boot.
 
+A aplicação possui validações de dados, filtros dinâmicos, paginação de registros, tratamento de erros e feedback visual para melhorar a experiência do usuário.
+
 ## Funcionalidades
 
 - ✅ Listagem de pessoas
@@ -16,6 +18,12 @@ O sistema permite realizar as operações de CRUD (Create, Read, Update e Delete
 - ✅ Exclusão com confirmação em modal
 - ✅ Filtro por Nome
 - ✅ Filtro por CPF/CNPJ
+- ✅ Interface responsiva
+- ✅ Paginação de registros
+- ✅ Validação de campos obrigatórios
+- ✅ Validação de CPF/CNPJ e email duplicados
+- ✅ Máscara para CPF/CNPJ e telefone
+- ✅ Feedback visual de sucesso e erro
 - ✅ Interface responsiva
 
 ## Tecnologias utilizadas
