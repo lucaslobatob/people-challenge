@@ -43,7 +43,7 @@ O sistema permite realizar as operações de CRUD (Create, Read, Update e Delete
 ## 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/people-challenge.git
+git clone https://github.com/lucaslobatob/people-challenge.git
 ```
 
 Entre na pasta do projeto:
