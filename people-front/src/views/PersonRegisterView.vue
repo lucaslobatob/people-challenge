@@ -3,11 +3,13 @@ import PersonForm from '../components/PersonForm.vue';
 import { createPerson, getPersonById, updatePerson } from '../services/personService.js';
 import { useRouter, useRoute } from 'vue-router';
 import { ref, onMounted, computed } from 'vue';
+import { useToast } from 'vue-toastification';
 
 const router = useRouter()
 const route = useRoute()
 
 const person = ref(null)
+const toast = useToast()
 
 const isEditMode = computed(() => !!route.params.id)
 
@@ -27,12 +29,15 @@ async function savePerson(person) {
     try {
         if(person.id){
             await updatePerson(person.id, person)
+            toast.success('Pessoa atualizada com sucesso!')
         } else {
             await createPerson(person)
+            toast.success('Pessoa cadastrada com sucesso!')
         }
         router.push('/people')
     } catch(error){
-        console.error(error)
+        toast.error('CPF/CNPJ já existe ou Email já cadastrado.')
+        toast.error('Erro ao salvar pessoa.')
     }
 }
 

@@ -1,7 +1,9 @@
 import api from "./api";
 
-export function getPeople() {
-    return api.get('/people')
+export function getPeople(params) {
+    return api.get('/people', {
+        params
+    })
 }
 
 export function createPerson(person) {

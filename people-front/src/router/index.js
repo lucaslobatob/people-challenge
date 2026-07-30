@@ -6,7 +6,7 @@ const routes = [
         component: () => import('../views/PeopleView.vue')
     },
     {
-        path: '/people/signup',
+        path: '/people/create',
         component: () => import('../views/PersonRegisterView.vue')
     },
     {

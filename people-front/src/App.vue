@@ -13,7 +13,7 @@
       <div class="d-flex">
         <router-link
           class="btn btn-light btn-sm fw-semibold"
-          to="/people/signup"
+          to="/people/create"
         >
           <i class="bi bi-person-plus me-1"></i>
           Nova Pessoa
